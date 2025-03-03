@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  fastapi_app:
+    build: .
+    container_name: fastapi_app
+    ports:
+      - "8000:8000"
+    environment:
+      - DB_URL=mysql+pymysql://root:examplepassword@mysql_db:3306/exampledb
+      - REDIS_URL=redis://redis:6379  # Додаємо середовище для підключення до Redis
+    volumes:
+      - .:/app  # Синхронізація локальних файлів з контейнером
+    depends_on:
+      - mysql_db  # Залежність від MySQL
+      - redis  # Додаємо залежність від Redis
+    networks:
+      - backend_network
+
+  mysql_db:
+    image: mysql:8.0.41
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: examplepassword
+      MYSQL_DATABASE: exampledb
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - backend_network
+
+  redis:
+    image: redis:6.0.9
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - backend_network
+
+networks:
+  backend_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
