@@ -6,21 +6,29 @@ This is a **FastAPI-based** project that handles posts, user authentication, and
 
 ```
 .
-├── app
+├── backend
+│   ├── __init__.py
 │   ├── models
+│   │   └── __init__.py
 │   │   └── post_model.py
+│   │   └── users_model.py
 │   ├── schemas
+│   │   └── __init__.py
 │   │   └── post_schemas.py
+│   │   └── user_schemas.py
 │   ├── service
+│   │   └── __init__.py
 │   │   └── redis_client.py
 │   ├── utils
+│   │   └── __init__.py
 │   │   └── utils.py
 │   │   └── user_utils.py
 │   ├── dependencies.py
 │   ├── main.py
-│   └── routers
-│       ├── post_router.py
-│       └── user_router.py
+│   └── endpoints
+│   │   └── __init__.py
+│       ├── post_endpoints.py
+│       └── user_endpoints.py
 ├── Dockerfile
 ├── docker-compose.yml
 ├── requirements.txt
@@ -53,7 +61,7 @@ This FastAPI application includes the following main functionalities:
 
 To run the project locally, you need the following:
 
-1. Python 3.8+
+1. Python 3.11+
 2. Docker (for running MySQL and Redis in containers)
 3. Redis and MySQL should be available as services (dockerized).
 
@@ -62,8 +70,8 @@ To run the project locally, you need the following:
 1. Clone the repository:
 
    ```bash
-   git clone <repository-url>
-   cd <project-directory>
+   git clone https://github.com/Tarasgr7/test_task.git
+   cd test_task
    ```
 
 2. Install dependencies:
@@ -78,7 +86,7 @@ To run the project locally, you need the following:
    docker-compose up --build
    ```
 
-4. After the containers are up, the FastAPI app will be accessible at `http://localhost:8000`.
+4. After the containers are up, the FastAPI app will be accessible at `http://0.0.0.0:8000`.
 
 ## API Documentation
 
@@ -212,7 +220,7 @@ To run the project locally, you need the following:
 
 This project uses the following libraries and tools:
 
-- **FastAPI**: Framework for building APIs with Python 3.8+.
+- **FastAPI**: Framework for building APIs with Python 3.11+.
 - **SQLAlchemy**: ORM for interacting with the MySQL database.
 - **Redis**: In-memory data structure store for caching.
 - **PyMySQL**: MySQL driver for Python.
@@ -234,15 +242,14 @@ docker-compose up --build
 ```
 
 The services will be available as follows:
-- FastAPI app: `http://localhost:8000`
-- MySQL: `localhost:3306`
-- Redis: `localhost:6379`
+- FastAPI app: `http://0.0.0.0:8000`
+- MySQL: `0.0.0.0:3306`
+- Redis: `0.0.0.0:6379`
 
 ## Utility Functions
 
 ### JWT Authentication and Authorization
 - **`create_access_token`**: Creates a JWT token for the user with an expiration time.
-- **`decode_access_token`**: Decodes a JWT token and returns the payload.
 - **`authenticate_user`**: Authenticates a user by email and password.
 - **`verify_password`**: Verifies the password against the hashed password stored in the database.
 - **`hash_password`**: Hashes a plain password using `bcrypt`.
@@ -266,5 +273,3 @@ The services will be available as follows:
 ## Conclusion
 
 This FastAPI application is designed to manage user authentication, posts, and efficient caching of posts using Redis. It also incorporates secure password hashing and JWT-based token authentication for protecting endpoints. The integration of Redis caching ensures faster retrieval of posts, especially when the data doesn't change frequently.
-
-For further questions or issues, please consult the [FastAPI Documentation](https://fastapi.tiangolo.com/).

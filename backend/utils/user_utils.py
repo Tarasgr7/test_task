@@ -80,22 +80,6 @@ def create_access_token(email: str, id: int, expires_delta: timedelta = None):
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)  # Encode the token.
 
 
-def decode_access_token(token: str):
-    """
-    Decodes a JWT access token to extract its payload.
-
-    Args:
-        token (str): The JWT token to decode.
-
-    Returns:
-        dict | None: The decoded payload if valid, or None if invalid.
-    """
-    try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload  # Return the decoded payload.
-    except JWTError:
-        return None  # If the token is invalid, return None.
-
 
 async def get_current_user(token: Annotated[str, Depends(oauth2_bearer)]):
     """
